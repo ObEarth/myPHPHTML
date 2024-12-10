@@ -118,16 +118,17 @@ alert(response);
     });
 });-->
 
-<script>
+<script>//jQuery脚本程序
     $(document).ready(function() {
-        $('#btn_signUp').click(function() {
-        if(($.trim($("input[name='username']").val()) === "")||($.trim($("input[name='password']").val()) === ""))
+        $('#btn_signUp').click(function() {//id为btn_signUp的按钮点击后执行的jQuery脚本
+        if(($.trim($("input[name='username']").val()) === "")||($.trim($("input[name='password']").val()) === ""))//获取输入框的内容
         {
             alert("用户名和密码不能为空！");
             return;
         }
+        //特定的post数据格式
         var postData = 'postType=0&username=' + $("input[name='username']").val() + '&' + 'userPassword=' +  $("input[name='password']").val();
-        document.getElementById("p1").innerHTML= postData;
+        document.getElementById("p1").innerHTML= postData;//获取id为p1的段落,并修改为post的用户名和密码 
         //1、创建xhr的对象
         let xhr = new XMLHttpRequest();
         //2、调用open函数('请求类型','url')
@@ -239,7 +240,7 @@ $(document).ready(function() {
      alert(xhr.responseText);
     }
   }
-  xhr.open("GET", "func.php?getAction=createUserTable", true);
+  xhr.open("GET", "func.php?getAction=createUserTable", true);//XML 名为getAction的GET方法带参数createUserTable
   xhr.send();
     });
 });

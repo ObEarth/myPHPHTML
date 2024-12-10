@@ -9,7 +9,7 @@ echo "今天是 " . date("l")."<br>";
 echo "当前时间是 " . date("h:i:sa")."<br>";
 
 echo "<br>****************Array***********************<br>";
-$cars=array("Volvo","BMW","Toyota"); 
+$cars=array("Volvo1","BMW","Toyota"); 
 echo "I like " . $cars[0] . ", " . $cars[1] . " and " . $cars[2] . ".";
 echo "<br>";
 
@@ -62,10 +62,10 @@ if ($con->connect_error) {
     die("连接失败: " . $con->connect_error);
 }
 
-mysqli_select_db($con,$newDatabase);
+mysqli_select_db($con,$newDatabase);//选择名为newDatabase的数据库进行操作
 //在数据库中检查用户名是否已注册
-$sql_insert = "select userPassword from $tableName where username = '$userNameData'";
-$result = mysqli_query($con,$sql_insert );
+$sql_insert = "select userPassword from $tableName where username = '$userNameData'";//在数据库中表名为tableName的数据中,是否有用户名为$userNameData的数据
+$result = mysqli_query($con,$sql_insert );//执行mysqli的查询操作
 if($result->num_rows)//sql已有此用户名
 {
   echo '2';
@@ -73,8 +73,8 @@ if($result->num_rows)//sql已有此用户名
   return;
 }
 $sql_insert = "INSERT INTO $tableName (userName,userPassword)
-    VALUES ('$userNameData','$userPasswordData')";
-mysqli_query($con,$sql_insert );
+    VALUES ('$userNameData','$userPasswordData')";//如果没有此用户名的数据,则进行注册操作,把用户名和密码插入数据库中
+mysqli_query($con,$sql_insert );//执行mysqli的插入操作
 
 mysqli_close($con);
 echo 1;
@@ -105,7 +105,7 @@ $sql_insert = "select userPassword from $tableName where username = '$userNameDa
 $result = mysqli_query($con,$sql_insert );
 if($result->num_rows)//sql已有此用户名
 {
-  if($result->fetch_assoc()['userPassword'] == $userPasswordData)
+  if($result->fetch_assoc()['userPassword'] == $userPasswordData)//检测用户$userNameData输入的密码与数据库中保存的密码是否相同
   {
      echo 0;//密码正确,登录成功 
   }
@@ -146,10 +146,10 @@ $result = mysqli_query($con,$sql_insert );
 // 数据查询 
     if($result)
     {
-        $rows = $result->num_rows;
-        if($rows)
+        $rows = $result->num_rows;//获取查询结果的行数
+        if($rows)//如果不为0,说明找到的数据
        {
-            while($row = $result->fetch_assoc())
+            while($row = $result->fetch_assoc())//输出已找到的数据
            {
                 echo $row['userPassword'];
             }
@@ -202,7 +202,7 @@ function createUserTable()
       die("连接失败: " . $con->connect_error);
   }
   
-  $resultDatabase = $con->query("SHOW DATABASES LIKE '" . $newDatabase. "'");
+  $resultDatabase = $con->query("SHOW DATABASES LIKE '" . $newDatabase. "'");//查询是否存在同名的数据库
   if ($resultDatabase->num_rows > 0) 
   {
   echo "已存在数据库".$newDatabase;
@@ -211,7 +211,7 @@ function createUserTable()
   {
   echo "database not exist";
   //Create database
-  if (mysqli_query($con,"CREATE DATABASE $newDatabase"))
+  if (mysqli_query($con,"CREATE DATABASE $newDatabase"))//创建名为$newDatabase的数据库
     {
     echo "Database created";
     }
@@ -223,7 +223,7 @@ function createUserTable()
   echo "<br>";
   // Create table in my_db database
   mysqli_select_db($con,$newDatabase);
-  $resultTable = $con->query("SHOW TABLES LIKE '" . $tableName. "'");
+  $resultTable = $con->query("SHOW TABLES LIKE '" . $tableName. "'");//查询是否存在同名的表
   if ($resultTable->num_rows > 0) 
   {
   echo "数据库".$newDatabase."已存在表". $tableName;
@@ -238,7 +238,7 @@ function createUserTable()
   userName varchar(15),
   userPassword varchar(15)
   )";
-  mysqli_query($con,$sql_create);
+  mysqli_query($con,$sql_create);//创建名为$tableName的数据库
   }
 }
 
