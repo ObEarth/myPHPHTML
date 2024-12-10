@@ -90,7 +90,7 @@
                 <button class="btn0" id="btn_signUp">注   册</button>
                 <button  class="btn0" id="btn_getUserData">查   询</button>
                 <button  class="btn0" id="btn_login">登   录</button>
-                <p id="p1" style="font-size:15px;color:red">这是一个段落。</p>
+                <p id="p1" style="font-size:15px;color:red">这是一个段落1。</p>
                 <button  class="btn1" id="btn_createUserTable">创建用户表单</button>
                 <button  class="btn1" id="btn_test">测   试</button>
             </div>
