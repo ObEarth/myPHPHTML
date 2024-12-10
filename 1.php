@@ -252,7 +252,7 @@ $(document).ready(function() {
      var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function(){
     if(xhr.readyState == 4 && xhr.status == 200){
-      // 处理服务器的响应
+      // 处理服务器的响应.
      alert(xhr.responseText);
     }
   }

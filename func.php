@@ -74,7 +74,7 @@ if($result->num_rows)//sql已有此用户名
 }
 $sql_insert = "INSERT INTO $tableName (userName,userPassword)
     VALUES ('$userNameData','$userPasswordData')";//如果没有此用户名的数据,则进行注册操作,把用户名和密码插入数据库中
-mysqli_query($con,$sql_insert );//执行mysqli的插入操作
+mysqli_query($con,$sql_insert );//执行mysqli的插入操作.
 
 mysqli_close($con);
 echo 1;
