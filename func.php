@@ -164,6 +164,35 @@ $result = mysqli_query($con,$sql_insert );
         echo 'MySQL语句有误。<br>'.$mysqli->error.'<br>';
     }
 }
+
+function userSaveChatRecord($userNameData,$timeData,$chatRecordData)
+ {
+  // 在此处编写你想要执行的PHP代码
+//MYSQL
+$servername = "localhost";
+$username = "root";
+$password = "121212";
+$database = "mysql";
+$newDatabase = "my_db";
+$tableName = "chatData";
+
+// 创建连接
+$con = new mysqli($servername, $username, $password, $database);
+
+// 检查连接
+if ($con->connect_error) {
+    die("连接失败: " . $con->connect_error);
+}
+
+mysqli_select_db($con,$newDatabase);//选择名为newDatabase的数据库进行操作
+
+$sql_insert = "INSERT INTO $tableName (userName,chatDate,chatRecord)
+    VALUES ('$userNameData','$timeData',$chatRecordData)";//如果没有此用户名的数据,则进行注册操作,把用户名和密码插入数据库中
+mysqli_query($con,$sql_insert );//执行mysqli的插入操作.
+
+mysqli_close($con);
+echo 5;
+}
 /*function loginPOST()
  {
   if ($_SERVER['REQUEST_METHOD'] == 'POST') 
@@ -242,7 +271,115 @@ function createUserTable()
   }
 }
 
+function createChatTable()
+ {
+  $servername = "localhost";
+  $username = "root";
+  $password = "121212";
+  $database = "mysql";
+  $newDatabase = "my_db";
+  $tableName = "chatData";
+  
+  // 创建连接
+  $con = new mysqli($servername, $username, $password, $database);
+  
+  // 检查连接
+  if ($con->connect_error) {
+      die("连接失败: " . $con->connect_error);
+  }
+  
+  $resultDatabase = $con->query("SHOW DATABASES LIKE '" . $newDatabase. "'");//查询是否存在同名的数据库
+  if ($resultDatabase->num_rows > 0) 
+  {
+  echo "已存在数据库".$newDatabase;
+  }
+  else
+  {
+  echo "database not exist";
+  //Create database
+  if (mysqli_query($con,"CREATE DATABASE $newDatabase"))//创建名为$newDatabase的数据库
+    {
+    echo "Database created";
+    }
+  else
+    {
+    echo "Error creating database: " . mysqli_error();
+    }
+  }
+  echo "<br>";
+  // Create table in my_db database
+  mysqli_select_db($con,$newDatabase);
+  $resultTable = $con->query("SHOW TABLES LIKE '" . $tableName. "'");//查询是否存在同名的表
+  if ($resultTable->num_rows > 0) 
+  {
+  echo "数据库".$newDatabase."已存在表". $tableName;
+  }
+  else
+  {
+  echo "database not exist";
+  $sql_create = "CREATE TABLE $tableName 
+  (
+  personID int NOT NULL AUTO_INCREMENT, 
+  PRIMARY KEY(personID),
+  userName varchar(15),
+  chatDate  varchar(30),
+  chatRecord varchar(255)
+  )";
+  mysqli_query($con,$sql_create);//创建名为$tableName的数据库
+  }
+}
 
+/*
+$host = '192.168.0.101';
+$port = '89';
+ 
+function send_udp_message($host, $port, $message)
+{
+    $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+    @socket_connect($socket, $host, $port);
+ 
+    $num = 0;
+    $length = strlen($message);
+    do
+    {
+        $buffer = substr($message, $num);
+        $ret = @socket_write($socket, $buffer);
+        $num += $ret;
+    } while ($num < $length);
+ 
+    socket_close($socket);
+ 
+    // UDP 是一种无链接的传输层协议, 不需要也无法获取返回消息
+    return true;
+}
+ 
+send_udp_message($host, $port, $message);
+ 
+function receive_udp_message($host, $port, $callback)
+{
+    $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+ 
+    @socket_bind($socket, $host, $port);
+    @set_time_limit(0);
+ 
+    while (true)
+    {
+        usleep(1000);
+ 
+        $ret = @socket_recvfrom($socket, $request, 16384, 0, $remote_host, $remote_port);
+        if ($ret)
+        {
+            $callback($remote_host, $remote_port, $request);
+        }
+ 
+        // 不需要返回给客户端任何消息, 继续循环
+    }
+}
+ 
+// 客户端来的任何请求都会打印到屏幕上
+receive_udp_message($host, $port, $callback);
+// 如果程序没有出现异常，该进程会一直存在
+*/
 
 // 检查是否存在名为getAction的GET参数
 if (isset($_GET['getAction']))
@@ -270,7 +407,7 @@ case 'createUserTable':
 // 检查是否存在名为postAction的POST参数
 if (isset($_POST['postType']))
  {
-  if($_POST['postType'] === "0")//判断postType 0 注册 1 查询 2 登录
+  if($_POST['postType'] === "0")//判断postType 0 注册 1 查询 2 登录 3 保存聊天记录
   {
     userSignUp($_POST['username'],$_POST['userPassword']);
   }
@@ -281,6 +418,10 @@ if (isset($_POST['postType']))
   if($_POST['postType'] === "2")
   {
     userLogin($_POST['username'],$_POST['userPassword']);
+  }
+  if($_POST['postType'] === "3")
+  {
+    userSaveChatRecord($_POST['username'],$_POST['chatDate'],$_POST['charRecord']);
   }
 }
 ?>

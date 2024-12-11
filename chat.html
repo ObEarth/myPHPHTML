@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+
+    <title>Document</title>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    .chat_commento{
+        width: 98%;
+        height: 100%;
+        margin: auto;
+        border-radius: 10px;
+        border: 2px solid #0400ff;
+    }
+    .clearfix::after{
+        content: "";
+        display: block;
+        clear: both;
+        width: 0;
+        height: 0;
+        line-height: 0;
+        visibility: hidden;
+    }
+    /* top */
+    .chat_top{
+        width: 99%;
+        height: 10%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding-left: 5%;
+        font-size: 20px;
+        line-height: 200%;
+        box-sizing: border-box;
+        font-weight: 90%;
+        border-width: 0px;
+    }
+    .chat_exit{
+        width: 10%;
+        height: 5%;
+        color: white;
+        background-color: #f30202;
+        text-align: center;
+        border-radius: 5px;
+        position: absolute;
+        right: 2%;
+        top: 0.5%;
+        line-height: 37px;
+    }
+    /* middle */
+    /* 左边 */
+    .chat_middle{
+        width: 99%;
+        height: 445px;
+        position: relative;
+        box-sizing: border-box;
+        overflow: auto;
+        border-width: 0px;
+    }
+    .chat_left{
+        width: 100%;
+        height: 120px;
+        margin-top: 20px;
+    }
+      /*无效 如需使用,修改background-color*/
+    .chat_left_item_1{
+        width: 50px;
+        height: 50px;
+        background-color: #ffffff;
+        float: left;
+        margin-top: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        text-align: center;
+        line-height: 50px;
+        color: white;
+        border-radius: 25px;
+        font-size:70%;
+    }
+    .chat_left_item_2{
+        width: 55%;
+        height: 100px;
+        float: left;
+        margin-top: 10px;
+    }
+    .chat_left_item_2 .chat_left_chat{
+        float: left;
+    }
+    .chat_left_item_2 .chat_left_content{
+        padding: 15px;
+        margin-top: 10px;
+        background-color: #f4f5f7;
+        display: inline-block;
+        border-radius: 10px;
+        border-top-left-radius: 0px;
+    }
+    /* 右边 */
+    .chat_right{
+        width: 100%;
+        height: 120px;
+        margin-top: 20px;
+    }
+    /*无效 如需使用,修改background-color*/
+    .chat_right_item_1{
+        width: 10%;
+        height: 36%;
+        background-color: #ffffff;
+        float: right;
+        margin-top: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        text-align: center;
+        line-height: 36%;
+        color: white;
+        border-radius: 25px;
+        font-size:62.5%;
+    }
+    .chat_right_item_2{
+        width: 55%;
+        height: 100px;
+        float: right;
+        margin-top: 10px;
+    }
+    .chat_right_time{
+        width: 100%;
+        font-size:50%;
+        color:#0400ff;
+        text-align: right;
+    }
+    .chat_right_content{
+        float: right;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 10px;
+        border-top-right-radius: 0px;
+        background-color: #4F7cff;
+        color: white;
+    }
+    /* foot */
+    .chat_foot{
+        width: 450px;
+        height: 130px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        position: relative;
+    }
+    .chat_context{
+        width: 100%;
+        height: 100%;
+        font-size: 17px;
+        box-sizing: border-box;
+        outline: none;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-width: 0px;
+        padding: 16px;
+    }
+    .chat_commit{
+        width: 80px;
+        height: 30px;
+        color: rgb(154, 248, 167);
+        background-color: #4F7cff;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 5px;
+        position: absolute;
+        right: 1%;
+        bottom: 10px;
+        margin-right: 10px;
+    }
+    .chat_context{
+        resize: none;
+    }
+    .chat_context::placeholder{
+        color: black;
+        font-weight: 500k;
+    }
+    .line{
+        width: 99%;
+        border-top: 0px;
+        border-color: #0055ff;
+        border-style: solid;
+    }
+</style>
+<body>
+    <!-- entry -->
+    <div class="chat_commento">
+        <!-- top -->
+        <div class="chat_top">
+           zxLOVE的聊天室
+        </div>
+        <div class="chat_exit" id="exitBtn">退出</div>
+        <!-- line -->
+        <div class="line"></div>
+        <!-- middle -->
+        <div class="chat_middle" id="chat_middle_item">
+            
+        </div>
+        <!-- line -->
+        <div class="line"></div>
+        <!-- foot -->
+        <div class="chat_foot">
+            <!-- context -->
+            <textarea class="chat_context" id="chat_context_item" cols="30" rows="10" placeholder="请输入"></textarea>
+            <div class="chat_commit" id="sendBtn">发送</div>
+        </div>
+    </div>
+    <script>
+        // 成功发送
+        var send_message=document.getElementById("chat_middle_item");
+        var domBtm=document.getElementById("sendBtn");
+        // 发送内容
+        var message=document.getElementById("chat_context_item");
+        domBtm.addEventListener("click",function(){
+            var str=message.value;
+            if(str === "")
+            {
+                alert("消息不能为空!");
+                return;
+            }
+            var date=new Date();
+            var year = date.getFullYear();
+            var mouth = date.getMonth();
+            var day = date.getDate();
+            var hour = date.getHours();
+            var mm = date.getMinutes();
+            var sec = date.getSeconds();
+            var time =  year + '-' + mouth + '-' + day + ' '+  hour + ':'+ mm + ':' + sec;
+            var ans='<div class="chat_right_item_1 clearfix"></div>'+
+                '<div class="chat_right_item_2">'+
+                    '<div class="chat_right_time clearfix">'+time+" " + localStorage["name"] +'</div>'+
+                    '<div class="chat_right_content clearfix">'+str+'</div>'
+                    +'</div>';
+            /*var ans='<div class="chat_left_item_1 clearfix">gdgdfg</div>'+
+                '<div class="chat_left_item_2">'+
+                    '<div class="chat_left_time clearfix">'+time+'</div>'+
+                    '<div class="chat_left_content clearfix">'+str+'</div>'
+                    +'</div>';*/
+            var oLi=document.createElement("div");
+            oLi.setAttribute("class","chat_right");
+            //oLi.setAttribute("class","chat_left");
+            oLi.innerHTML=ans;
+            send_message.append(oLi);
+            message.value="";
+
+        //特定的post数据格式
+        var postData = 'postType=3&username=' + localStorage["name"] + '&chatDate=' +  time + '&chatRecord=' + str;
+        document.getElementById("p1").innerHTML= postData;//获取id为p1的段落,并修改为post的用户名和密码 
+        //1、创建xhr的对象
+        let xhr = new XMLHttpRequest();
+        //2、调用open函数('请求类型','url')
+        xhr.open('POST', "func.php",true);
+        //3、设置 Content-Type属性（固定写法）
+        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
+        //4、调用send函数
+        xhr.send(postData);
+        //5、监听事件
+        xhr.onreadystatechange = function () 
+        {
+            if (xhr.readyState === 4 && xhr.status === 200)
+            {
+                if(xhr.responseText == 5)
+                {
+                    alert("聊天记录保存成功！");
+                }
+            }
+        }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#exitBtn').click(function() {
+               // location.href = '1.php';
+                alert(exit21);
+            });
+        });
+        </script>
+</body>
+</html>
