@@ -187,7 +187,7 @@ if ($con->connect_error) {
 mysqli_select_db($con,$newDatabase);//选择名为newDatabase的数据库进行操作
 
 $sql_insert = "INSERT INTO $tableName (userName,chatDate,chatRecord)
-    VALUES ('$userNameData','$timeData',$chatRecordData)";//如果没有此用户名的数据,则进行注册操作,把用户名和密码插入数据库中
+    VALUES ('$userNameData','$timeData','$chatRecordData')";//如果没有此用户名的数据,则进行注册操作,把用户名和密码插入数据库中
 mysqli_query($con,$sql_insert );//执行mysqli的插入操作.
 
 mysqli_close($con);
@@ -269,6 +269,7 @@ function createUserTable()
   )";
   mysqli_query($con,$sql_create);//创建名为$tableName的数据库
   }
+  mysqli_close($con);
 }
 
 function createChatTable()
@@ -327,6 +328,7 @@ function createChatTable()
   )";
   mysqli_query($con,$sql_create);//创建名为$tableName的数据库
   }
+  mysqli_close($con);
 }
 
 /*
@@ -421,7 +423,7 @@ if (isset($_POST['postType']))
   }
   if($_POST['postType'] === "3")
   {
-    userSaveChatRecord($_POST['username'],$_POST['chatDate'],$_POST['charRecord']);
+    userSaveChatRecord($_POST['userName'],$_POST['chatDate'],$_POST['chatRecord']);
   }
 }
 ?>
