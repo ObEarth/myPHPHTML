@@ -331,16 +331,44 @@
       // 处理服务器的响应
      if(xhr.responseText != 6)
      {
-        alert(xhr.responseText);
-        /*if(localStorage["name"] == 1)//本用户的聊天记录输出在右边
-        {
+        var data=eval("("+xhr.responseText+")");//转换为json对象 
+        alert("userName:"+data.userName+",chatDate:"+data.chatDate+",chatRecord:"+data.chatRecord); 
+        /*$.each(data,function(idx,item){ 
+if(idx==0){ 
+return true;//同countinue，返回false同break 
+} 
+alert("userName:"+item.userName+",chatDate:"+item.chatDate+",chatRecord:"+item.chatRecord); 
+}); */
+        
 
+		/*for(var i=0; i<data.length; i++)
+        {   // 遍历数组读取数据*/
+				
+
+        var oLi=document.createElement("div");
+        if(localStorage["name"] == data.userName)//本用户的聊天记录输出在右边
+        {
+            var ans='<div class="chat_right_item_1 clearfix"></div>'+
+                '<div class="chat_right_item_2">'+
+                    '<div class="chat_right_time clearfix">' + data.userName + " " + data.chatDate +'</div>'+
+                    '<div class="chat_right_content clearfix">' + data.chatRecord + '</div>'
+                    +'</div>';
+            oLi.setAttribute("class","chat_left");
         }
         else//其他用户的聊天记录输出在左边
         {
-
-        }*/
-     }
+            var ans='<div class="chat_left_item_1 clearfix"></div>'+
+            '<div class="chat_left_item_2">'+
+                '<div class="chat_left_time clearfix">' + data.userName + " " + data.chatDate +'</div>'+
+                '<div class="chat_left_content clearfix">' + data.chatRecord +'</div>'
+                +'</div>';
+            oLi.setAttribute("class","chat_rIght");
+        }
+        oLi.innerHTML=ans;
+        send_message.append(oLi);
+        message.value="";
+    //}
+    }
     }
   }
   xhr.open("GET", "func.php?getAction=getChatRecord", true);//XML 名为getAction的GET方法带参数createUserTable
