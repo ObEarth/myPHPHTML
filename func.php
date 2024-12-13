@@ -141,8 +141,8 @@ if ($con->connect_error) {
     die("连接失败: " . $con->connect_error);
 }
 mysqli_select_db($con,$newDatabase);
-$sql_insert = "select userPassword from $tableName where username = '$userNameData'";
-$result = mysqli_query($con,$sql_insert );
+$sql_select = "select userPassword from $tableName where username = '$userNameData'";
+$result = mysqli_query($con,$sql_select);
 // 数据查询 
     if($result)
     {
@@ -157,6 +157,48 @@ $result = mysqli_query($con,$sql_insert );
         else
         {
             echo 4;
+        }
+    }
+   else
+    {
+        echo 'MySQL语句有误。<br>'.$mysqli->error.'<br>';
+    }
+}
+
+function getChatRecord()
+{
+$servername = "localhost";
+$username = "root";
+$password = "121212";
+$database = "mysql";
+$newDatabase = "my_db";
+$tableName = "chatData";
+
+// 创建连接
+$con = new mysqli($servername, $username, $password, $database);
+
+// 检查连接
+if ($con->connect_error) {
+    die("连接失败: " . $con->connect_error);
+}
+mysqli_select_db($con,$newDatabase);
+$sql_select = "select userName,chatDate,chatRecord from $tableName";
+$result = mysqli_query($con,$sql_select);
+// 数据查询 
+    if($result)
+    {
+        $rows = $result->num_rows;//获取查询结果的行数
+        if($rows)//如果不为0,说明找到的数据
+       {
+            while($row = $result->fetch_assoc())//输出已找到的数据
+           {
+               $arr = array('userName'=>$row['userName'],'chatDate'=>$row['chatDate'],'chatRecord'=>$row['chatRecord']);
+               echo json_encode($arr);
+           }
+        }
+        else
+        {
+          echo 6;
         }
     }
    else
@@ -389,9 +431,9 @@ if (isset($_GET['getAction']))
 $gAction = $_GET['getAction'];
 // 根据getAction参数的值调用对应的PHP函数gAction =$ _GET['getAction'];
 switch ($gAction) {
-    case 'getUserData':
-      getUserData();
-        break;
+  case 'getChatRecord':
+    getChatRecord();
+      break;
 case 'createUserTable':
         createUserTable();
         break;

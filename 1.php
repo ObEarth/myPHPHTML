@@ -6,7 +6,7 @@
     <title>Document</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- <script src="D:\xampp\htdocs\jquery-3.4.1.min.js"></script> -->
-<!-- 服务器返回数据 0 登录成功 1 注册成功 2 此用户名已注册 3 密码不正确 4 用户名不存在 5 聊天数据保存成功-->
+<!-- 服务器返回数据 0 登录成功 1 注册成功 2 此用户名已注册 3 密码不正确 4 用户名不存在 5 聊天数据保存成功 6 无聊天记录-->
     <style>
         * {
             margin: 0;
