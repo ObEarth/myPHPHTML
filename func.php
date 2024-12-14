@@ -190,11 +190,14 @@ $result = mysqli_query($con,$sql_select);
         $rows = $result->num_rows;//获取查询结果的行数
         if($rows)//如果不为0,说明找到的数据
        {
+        $chatRecordArray = array();
+        $i = 0;
             while($row = $result->fetch_assoc())//输出已找到的数据
            {
                $arr = array('userName'=>$row['userName'],'chatDate'=>$row['chatDate'],'chatRecord'=>$row['chatRecord']);
-               echo json_encode($arr);
+               $chatRecordArray[$i++] = $arr;
            }
+           echo json_encode($chatRecordArray);
         }
         else
         {
